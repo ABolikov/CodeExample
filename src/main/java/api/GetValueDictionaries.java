@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author abolikov
+ * @version 1.0
+ */
+
 public class GetValueDictionaries extends AbstractSend {
 
     public String getAreas(String country, String regionName, String cityName) {

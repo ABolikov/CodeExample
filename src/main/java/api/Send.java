@@ -1,11 +1,19 @@
 package api;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+
+/**
+ * @author abolikov
+ * @version 1.0
+ */
 
 public class Send extends AbstractSend {
 
@@ -34,6 +42,16 @@ public class Send extends AbstractSend {
 
     public JsonPath post(String url, String request) {
         return post(url, request, successAnswer);
+    }
+
+    public JsonPath getUnirest(String request) throws UnirestException {
+        String send = translator.translate(request);
+        HttpResponse<String> s = Unirest.get(send).
+                header("content-type", "text/html").
+                header("cache-control", "no-cache").asString();
+        log.info(send + "\n");
+        log.info(s.getBody() + "\n");
+        return new JsonPath(s.getBody());
     }
 
 }

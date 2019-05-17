@@ -1,0 +1,1 @@
+/vacancies?area=#area&employment=#employment&experience=#experience&schedule=#schedule&specialization=#specialization&text=#text

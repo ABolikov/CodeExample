@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="CodeExample" parallel="tests" thread-count="2">
+
+    <test name="Head Hunter API">
+        <classes>
+            <class name="testSuites.HeadHunterAPI"/>
+        </classes>
+    </test>
+
+    <test name="Head Hunter Site">
+        <parameter name="browser" value="chrome" />
+        <classes>
+            <class name="testSuites.HeadHunterSite"/>
+        </classes>
+    </test>
+
+</suite>

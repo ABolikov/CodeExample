@@ -5,6 +5,10 @@ import settings.Setting;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * @author abolikov
+ * @version 1.0
+ */
 
 public class SendTranslator extends Setting {
     private HashMap<String, String> dictionary = new HashMap<String, String>();
