@@ -12,8 +12,8 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
 
-class SearchCityPage extends BasePage {
-    SearchCityPage(WebDriver driver) {
+public class SearchCityPage extends BasePage {
+    public SearchCityPage(WebDriver driver) {
         super(driver);
         WebDriverRunner.setWebDriver(driver);
     }
@@ -26,7 +26,7 @@ class SearchCityPage extends BasePage {
 
 
     @Step("Выбрать город")
-    AnswerSearchPage sendKeysSearchCity(String city) {
+    public AnswerSearchPage sendKeysSearchCity(String city) {
         $(SEARCH_CITY).click();
         $(SEARCH_CITY).clear();
         $(SEARCH_CITY).sendKeys(city);

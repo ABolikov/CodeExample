@@ -27,6 +27,7 @@ public class Send extends AbstractSend {
         Response respGET = given().get(request);
         log.info(send + "\n");
         log.info(respGET.asString() + "\n");
+        allureOutputInfo(null, send, respGET.asString());
         return respGET;
     }
 
@@ -37,6 +38,7 @@ public class Send extends AbstractSend {
         Response response = given().contentType(JSON).body(send).when().post(url);
         log.info(response.asString());
         response.then().spec(specification);
+        allureOutputInfo(url, send, response.asString());
         return new JsonPath(response.asString());
     }
 
@@ -51,6 +53,7 @@ public class Send extends AbstractSend {
                 header("cache-control", "no-cache").asString();
         log.info(send + "\n");
         log.info(s.getBody() + "\n");
+        allureOutputInfo(null, send, s.getBody());
         return new JsonPath(s.getBody());
     }
 

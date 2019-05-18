@@ -9,13 +9,13 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class Page {
 
-    private WebDriver driver;
+    public WebDriver driver;
 
     Page(WebDriver driver) {
         this.driver = driver;
     }
 
-    final WebDriver getWebDriver() {
+    public final WebDriver getWebDriver() {
         return driver;
     }
 
