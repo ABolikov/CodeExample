@@ -9,13 +9,15 @@ import org.openqa.selenium.WebDriver;
 
 public abstract class Page {
 
-    protected WebDriver driver;
+    private WebDriver driver;
 
     Page(WebDriver driver) {
         this.driver = driver;
     }
 
-    public final WebDriver getWebDriver() {
+    final WebDriver getWebDriver() {
         return driver;
     }
+
+    public abstract String declension(long number, String caseOne, String caseTwo, String caseFive);
 }

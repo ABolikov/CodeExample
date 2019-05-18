@@ -1,16 +1,14 @@
 package testSuites;
 
-import api.GetValueDictionaries;
-import api.Send;
-import api.SendTranslator;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.AnswerSearchPage;
 import page.HomePage;
 import ru.yandex.qatools.allure.annotations.Description;
 import ru.yandex.qatools.allure.annotations.Features;
 import ru.yandex.qatools.allure.annotations.Stories;
-import ru.yandex.qatools.allure.annotations.Title;
 import settings.RetryMonitor;
 import settings.Setting;
 
@@ -24,33 +22,38 @@ import static page.BasePage.SearchSection.JOBS;
  */
 
 public class HeadHunterSite extends Setting {
-    private Send send = new Send();
-    private SendTranslator translator = new SendTranslator();
-    private GetValueDictionaries getParam = new GetValueDictionaries();
 
     @BeforeClass
     private void setUpValue() {
         init();
-        /*translator.setLex("#" + EMPLOYMENT.getDictionaries(), getParam.getDictionaries(EMPLOYMENT, "Полная занятость"));
-        translator.setLex("#" + EXPERIENCE.getDictionaries(), getParam.getDictionaries(EXPERIENCE, "От 1 года до 3 лет"));
-        translator.setLex("#" + SCHEDULE.getDictionaries(), getParam.getDictionaries(SCHEDULE, "Полный день"));
-        translator.setLex("#specialization", getParam.getSpecializations(IT));
-        send.setTranslator(translator);*/
+    }
+
+    @DataProvider(name = "JobSearch")
+    private Object[][] jobSearch() {
+        return new Object[][]{
+                {"00001", "Омск", "Ведущий QA инженер", true},
+                {"00002", "Чита", "АЗС", true},
+                {"00003", "Новый Уренгой", "sgfdsgfdhg", false},
+        };
     }
 
     @Features("Head Hunter API")
     @Stories("Поиск вакансий на сайте")
     @Description("Проверка выполенния поиска по указанным данным")
-    @Title("00001")
-    @Test(retryAnalyzer = RetryMonitor.class)
-    public void jobSearch() {
-        log.info("Start test: 00001");
+    @Test(retryAnalyzer = RetryMonitor.class, dataProvider = "JobSearch")
+    public void checkJobSearch(String numCase, String city, String vacancy, Boolean visibleVacancy) {
+        log.info("Start test: " + numCase);
         open(CITE_URL);
         HomePage hp = PageFactory.initElements(getWebDriver(), HomePage.class);
-        hp.determineGeolocation("Омск").
+        hp.determineGeolocation(city).
                 instalSearchSection(JOBS).
-                sendKeysSearchVacancies("Ведущий QA инженер").
-                clickButtonSearch();
-        log.info("Finish test: 00001");
+                sendKeysSearchVacancies(vacancy).
+                clickButtonSearch().
+                checkHeaderAnswerSearchPage(vacancy, visibleVacancy);
+        if (visibleVacancy) {
+            AnswerSearchPage aSP = PageFactory.initElements(getWebDriver(), AnswerSearchPage.class);
+            aSP.checkNemaVacancy(vacancy, city);
+        }
+        log.info("Finish test: " + numCase);
     }
 }

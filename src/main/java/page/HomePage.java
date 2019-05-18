@@ -1,7 +1,6 @@
 package page;
 
 import com.codeborne.selenide.WebDriverRunner;
-import jdk.nashorn.internal.ir.IfNode;
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebDriver;
@@ -10,7 +9,6 @@ import org.openqa.selenium.support.PageFactory;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 /**
  * @author abolikov
@@ -33,8 +31,11 @@ public class HomePage extends BasePage {
                 $(GEOLOCATION).findElementByClassName("navi-region-clarification-text").click();
             } else {
                 $(GEOLOCATION).findElementByClassName("bloko-button_primary-minor").click();
+                new SearchCityPage(getWebDriver()).sendKeysSearchCity(city);
             }
 
+        } else {
+            clickSearchCites().sendKeysSearchCity(city);
         }
         return PageFactory.initElements(getWebDriver(), HomePage.class);
     }

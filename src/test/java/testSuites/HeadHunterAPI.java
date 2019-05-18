@@ -124,11 +124,11 @@ public class HeadHunterAPI extends Setting {
         for (HashMap vacancy : vacancies) {
             check.assertEquals(((HashMap) vacancy.get("area")).get("id"), area);
             for (String name : names) {
-                if (vacancy.get("name").toString().contains(name)) {
+                if (vacancy.get("name").toString().toLowerCase().contains(name.toLowerCase())) {
                     flag = true;
                 }
             }
-            check.assertTrue(flag, "Вакансия с ID = " + vacancy.get("id") + " не содержит ниодной части искомой вакансии");
+            check.assertTrue(flag, "Вакансия с ID = " + vacancy.get("id") + " не содержит ни одной части искомой вакансии");
         }
         check.assertAll();
         log.info("Finish test: " + numCase);
